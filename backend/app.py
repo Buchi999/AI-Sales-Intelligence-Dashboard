@@ -13,6 +13,27 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data"
 os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
 os.makedirs(DATA_DIR, exist_ok=True)
 
+def initialize_database_if_empty():
+    """If the sales table does not exist yet, create it from the sample CSV."""
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='sales'")
+    table_exists = cursor.fetchone()
+    conn.close()
+
+    if not table_exists:
+        sample_csv = os.path.join(DATA_DIR, "sales_data.csv")
+        if os.path.exists(sample_csv):
+            df = pd.read_csv(sample_csv)
+            conn = sqlite3.connect(DB_PATH)
+            df.to_sql("sales", conn, if_exists="replace", index=False)
+            conn.close()
+            print("Database initialized from sample CSV.")
+        else:
+            print("No sample CSV found to initialize database.")
+
+initialize_database_if_empty()
+
 def get_df():
     conn = sqlite3.connect(DB_PATH)
     df = pd.read_sql_query("SELECT * FROM sales", conn)
