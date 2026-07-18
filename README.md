@@ -4,13 +4,13 @@ An AI-powered dashboard that analyzes sales and customer data from multiple sour
 
 ## Features
 
--  **Automatic data analysis** — upload any sales CSV/Excel file, and the system automatically detects which columns represent amounts, dates, and categories  
-- <fe0f> **SQLite database** — structured storage for uploaded data 
--  **Live currency exchange rates** — pulled from a public API and logged over time  
--  **AI-generated insights** — a real AI model reads your data and writes a plain-English summary  
--  **Ask-a-question box** — type any question about your data and get a specific, AI-generated answer  
--  **Interactive charts** — auto-generated bar charts for every detected category in your data  
-- ⚠<fe0f> **Graceful error handling** — clear messages if the backend, AI key, or file upload fails
+- **Automatic data analysis** — upload any sales CSV/Excel file, and the system automatically detects which columns represent amounts, dates, and categories
+- **SQLite database** — structured storage for uploaded data
+- **Live currency exchange rates** — pulled from a public API and logged over time
+- **AI-generated insights** — a real AI model reads your data and writes a plain-English summary
+- **Ask-a-question box** — type any question about your data and get a specific, AI-generated answer
+- **Interactive charts** — auto-generated bar charts for every detected category in your data
+- **Graceful error handling** — clear messages if the backend, AI key, or file upload fails
 
 ## Tech Stack
 
@@ -21,14 +21,34 @@ An AI-powered dashboard that analyzes sales and customer data from multiple sour
 
 ## Project Structure
 
+    sales-intel-dashboard/
+    ├── backend/          # Flask server, data analysis, AI integration
+    ├── data/             # Uploaded CSV/Excel files
+    ├── database/         # SQLite database (not tracked in git)
+    └── frontend/         # Dashboard UI (HTML/CSS/JS)
+
 ## Setup & Running Locally
 
 1. Clone this repository
 2. Set up a Python virtual environment:
+
+       python3 -m venv venv
+       source venv/bin/activate
+
 3. Install dependencies:
+
+       pip install flask flask-cors pandas requests groq openpyxl
+
 4. Set your Groq API key:
+
+       export GROQ_API_KEY="your_key_here"
+
 5. Run the backend:
-6. Open `frontend/index.html` in your browser
+
+       cd backend
+       python3 app.py
+
+6. Open frontend/index.html in your browser
 
 ## How It Works
 
@@ -40,5 +60,5 @@ An AI-powered dashboard that analyzes sales and customer data from multiple sour
 
 ## Notes
 
-- This project was built as a learning/portfolio project, demonstrating a full data pipeline: file ingestion → database storage → live external API integration → AI-powered analysis → interactive dashboard
-- The `.env` file (containing API keys) and `venv/` folder are excluded from version control for security and size reasons — see `.gitignore`
+- This project was built as a learning/portfolio project, demonstrating a full data pipeline: file ingestion, database storage, live external API integration, AI-powered analysis, and an interactive dashboard
+- The .env file (containing API keys) and venv/ folder are excluded from version control for security and size reasons — see .gitignore
