@@ -8,8 +8,10 @@ from groq import Groq
 app = Flask(__name__)
 CORS(app)
 
-DB_PATH = "../database/sales_intel.db"
-DATA_DIR = "../data"
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "database", "sales_intel.db")
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
+os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+os.makedirs(DATA_DIR, exist_ok=True)
 
 def get_df():
     conn = sqlite3.connect(DB_PATH)
@@ -199,4 +201,4 @@ def ask():
     return jsonify({"answer": response.choices[0].message.content})
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=False)
