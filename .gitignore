@@ -1,0 +1,12 @@
+# Never upload the Python virtual environment (it's huge and machine-specific)
+venv/
+
+# Never upload Python cache files
+__pycache__/
+*.pyc
+
+# Never upload environment/secret files
+.env
+
+# Never upload the database file itself (it may contain real data + is regenerated from CSVs)
+database/*.db
